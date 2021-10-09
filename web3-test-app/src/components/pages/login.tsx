@@ -1,48 +1,30 @@
 import React from "react";
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import { Dispatch } from "redux";
+import { useSelector, shallowEqual } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-import { addContact, removeContact } from "../../store/actionCreator";
 import { ContactItem } from "../contact/contactItem";
-
 import "../../styles/styles.css";
 
 export const Login: React.FC = () => {
+  const history = useHistory();
+
   const contacts: readonly Contact[] = useSelector(
     (state: ContactState) => state.contacts,
     shallowEqual
   );
 
-  const dispatch: Dispatch<any> = useDispatch();
-
-  const addingContact = React.useCallback(
-    (contact: Contact) => dispatch(addContact(contact)),
-    [dispatch]
-  );
-
-  const removingContact = React.useCallback(
-    (contact: Contact) => dispatch(removeContact(contact)),
-    [dispatch]
-  );
+  const navigateTo = (address: string) => {
+    history.push(address);
+  };
 
   return (
     <main className={"center login"}>
       <span className={"customLabel"}>Test1</span>
-      <button
-        onClick={() => {
-          const a = {
-            id: 123,
-            title: "string",
-            body: "string",
-          };
-          addingContact(a);
-        }}
-        className={"customButton"}
-      >
+      <button onClick={() => navigateTo("/edit")} className={"customButton"}>
         Adding Button
       </button>
       {contacts.map((item: Contact) => (
-        <ContactItem contact={item} />
+        <ContactItem contact={item} key={item.id} />
       ))}
     </main>
   );
