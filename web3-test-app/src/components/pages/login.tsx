@@ -1,31 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connector";
-import { ContactItem } from "../contact/contactItem";
 import "../../styles/styles.css";
+import { useEagerConnect, useInactiveListener } from "../../hooks/hooks";
 
 export const Login: React.FC = () => {
+  const { account, activate } = useWeb3React();
+  const store = require("store");
   const history = useHistory();
-  const { activate, account } = useWeb3React();
+
+  const accountState = store.get("Account");
+  const [activatingConnector, setActivatingConnector] = useState<any>();
 
   const contacts: readonly Contact[] = useSelector(
     (state: ContactState) => state.contacts,
     shallowEqual
   );
 
-  const navigateTo = (address: string) => {
-    history.push(address);
-  };
-
   async function connect() {
     try {
       await activate(injected);
+      store.set("Account", true);
+      history.push("/home");
     } catch (ex) {
       console.log(ex);
     }
   }
+
+  // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
+  const triedEager = useEagerConnect(accountState);
+
+  // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
+  useInactiveListener(!triedEager || !!activatingConnector);
 
   return (
     <main className={"center login"}>
@@ -33,12 +41,6 @@ export const Login: React.FC = () => {
       <button type="button" onClick={connect} className={"customButton"}>
         Connect to MetaMask
       </button>
-      <button onClick={() => navigateTo("/edit")} className={"customButton"}>
-        Adding Button
-      </button>
-      {contacts.map((item: Contact) => (
-        <ContactItem contact={item} key={item.id} />
-      ))}
     </main>
   );
 };
