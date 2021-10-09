@@ -53,3 +53,46 @@ main > h1 {
   text-transform: capitalize;
   font-size: 1.7rem;
 }
+
+.EditContact {
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.EditContact input {
+  display: block;
+  margin: 1rem auto;
+  width: 20rem;
+  padding: 0.5rem;
+  border: 1px solid#f15a29;
+  border-radius: 10px;
+  outline: none;
+}
+
+.EditContact button {
+  width: 21rem;
+  padding: 0.7rem;
+  border: 1px solid#f15a29;
+  background: #f15a29;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.EditContact button:hover {
+  background: #f15a29;
+}
+
+.EditContact button:disabled {
+  background: #d8d8d8;
+  border: 1px solid #d8d8d8;
+  cursor: not-allowed;
+}

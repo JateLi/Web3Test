@@ -1,19 +1,27 @@
-import "./App.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Web3ReactProvider } from "@web3-react/core";
+import Web3 from "web3";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Login } from "./components/pages/login";
 import { Home } from "./components/pages/home";
 import { Edit } from "./components/pages/edit";
 
+function getLibrary(provider: any) {
+  return new Web3(provider);
+}
+
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/edit" component={Edit} />
-        <Route exact path="/edit/:id" component={Edit} />
-      </Switch>
-    </Router>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/edit" component={Edit} />
+          <Route exact path="/edit/:id" component={Edit} />
+        </Switch>
+      </Router>
+    </Web3ReactProvider>
   );
 }
 
