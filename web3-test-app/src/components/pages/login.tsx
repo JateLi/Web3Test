@@ -3,6 +3,9 @@ import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 
 import { addContact, removeContact } from "../../store/actionCreator";
+import { ContactItem } from "../contact/contactItem";
+
+import "../../styles/styles.css";
 
 export const Login: React.FC = () => {
   const contacts: readonly Contact[] = useSelector(
@@ -23,8 +26,8 @@ export const Login: React.FC = () => {
   );
 
   return (
-    <main>
-      <div>Test1</div>
+    <main className={"center login"}>
+      <span className={"customLabel"}>Test1</span>
       <button
         onClick={() => {
           const a = {
@@ -34,11 +37,12 @@ export const Login: React.FC = () => {
           };
           addingContact(a);
         }}
+        className={"customButton"}
       >
         Adding Button
       </button>
       {contacts.map((item: Contact) => (
-        <div>{item.id}</div>
+        <ContactItem contact={item} />
       ))}
     </main>
   );
