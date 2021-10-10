@@ -7,14 +7,24 @@ type Props = {
 };
 
 export const NavHeader: React.FC<Props> = ({ leftNav, rightNav, title }) => {
+  const emptyHolder = <div className={"headerBtm"}>{""}</div>;
+
   return (
-    <div className={"header"}>
-      {leftNav ? <button onClick={leftNav}>{"<"}</button> : <div>{""}</div>}
+    <div className={"topHeader"}>
+      {leftNav ? (
+        <button className={"headerBtm"} onClick={leftNav}>
+          <span>{"<"}</span>
+        </button>
+      ) : (
+        emptyHolder
+      )}
       <div>{title ?? "Test"}</div>
       {rightNav ? (
-        <button onClick={rightNav}>{"Edit"}</button>
+        <button className={"headerBtm"} onClick={rightNav}>
+          <span> {"Edit"}</span>
+        </button>
       ) : (
-        <div>{""}</div>
+        emptyHolder
       )}
     </div>
   );

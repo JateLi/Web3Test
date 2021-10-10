@@ -5,8 +5,10 @@ import { Dispatch } from "redux";
 import { useSelector, shallowEqual } from "react-redux";
 import { ethers } from "ethers";
 import { addContact, removeContact } from "../../store/actionCreator";
+import { NavHeader } from "../util/navHeader";
 
 // TODO need to test with testNet and mock ETH.
+// Not sure if i have enough time to test this. The returned error message looks correct.
 export const startPayment = async ({ ether, addr }: any) => {
   const { ethereum } = window as any;
   try {
@@ -56,16 +58,6 @@ export const Send: React.FC<any> = ({ match }) => {
 
   const dispatch: Dispatch<any> = useDispatch();
 
-  const addingContact = React.useCallback(
-    (contact: Contact) => dispatch(addContact(contact)),
-    [dispatch]
-  );
-
-  const removingContact = React.useCallback(
-    (contact: Contact) => dispatch(removeContact(contact)),
-    [dispatch]
-  );
-
   const onEditContact = (id: number) => {
     history.push(`/edit/${id}`);
   };
@@ -88,6 +80,11 @@ export const Send: React.FC<any> = ({ match }) => {
   return (
     <>
       <form className={"EditContact center login"}>
+        <NavHeader
+          title={`Send to ${selectedItem?.title}`}
+          leftNav={() => history.push("/home")}
+          rightNav={() => onEditContact(contactId)}
+        />
         <input
           type="text"
           id="title"
@@ -113,6 +110,7 @@ export const Send: React.FC<any> = ({ match }) => {
           value={contact.ETH}
         />
         <button
+          className={"customButton"}
           disabled={contact === undefined ? true : false}
           onClick={() => handleSubmit()}
         >

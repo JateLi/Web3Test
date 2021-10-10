@@ -3,7 +3,12 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { useSelector, shallowEqual } from "react-redux";
-import { addContact, removeContact } from "../../store/actionCreator";
+import {
+  addContact,
+  removeContact,
+  editContact,
+} from "../../store/actionCreator";
+import { NavHeader } from "../util/navHeader";
 
 export const Edit: React.FC<any> = ({ match }) => {
   const history = useHistory();
@@ -16,7 +21,6 @@ export const Edit: React.FC<any> = ({ match }) => {
   );
 
   const selectedItem = contacts.find(({ id }) => id === Number(contactId));
-  console.log(selectedItem);
 
   const [contact, setContact] = useState<Contact>({
     id: -1,
@@ -43,43 +47,79 @@ export const Edit: React.FC<any> = ({ match }) => {
     [dispatch]
   );
 
+  const udpateContact = React.useCallback(
+    (contact: Contact) => dispatch(editContact(contact)),
+    [dispatch]
+  );
+
   useEffect(() => {
     // Overwrite to textInput field.
     if (!selectedItem) return;
     setContact(selectedItem);
   }, [selectedItem]);
 
-  const addNewContact = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("onSubmit");
+  const addNewContact = () => {
     if (!contact) return;
-    addingContact(contact);
+    if (contactId) {
+      //Edit contact
+      udpateContact(contact);
+    } else {
+      addingContact(contact);
+    }
+
     history.push("/home");
+  };
+
+  const deleteContact = () => {
+    if (!contact) return;
+    removingContact(contact);
+    history.push("/home");
+  };
+
+  const inputFieldValidate = () => {
+    // TODO check input field
+    return true;
+  };
+
+  const returnValidateMessage = () => {
+    // TODO check input field
+    return "Error message";
   };
 
   return (
     <>
-      <form onSubmit={addNewContact} className={"EditContact center login"}>
+      <form className={"EditContact center login"}>
+        <NavHeader title={"Edit"} leftNav={() => history.push("/home")} />
         <input
           type="text"
           id="title"
-          placeholder="Title"
+          placeholder="Name"
           onChange={handleContactData}
           value={contact.title}
         />
         <input
           type="text"
           id="body"
-          placeholder="Description"
+          placeholder="Address"
           onChange={handleContactData}
           value={contact.body}
         />
-        <button disabled={contact === undefined ? true : false}>
-          Save Contact
+        <button
+          onClick={addNewContact}
+          className={"customButton"}
+          disabled={contact === undefined ? true : false}
+        >
+          Save
         </button>
-        <button disabled={contact === undefined ? true : false}>
-          Delete Contact
-        </button>
+        {!!contactId && (
+          <button
+            className={"customDeleteButton"}
+            onClick={deleteContact}
+            disabled={contact === undefined ? true : false}
+          >
+            Delete
+          </button>
+        )}
       </form>
     </>
   );

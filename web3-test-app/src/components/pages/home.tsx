@@ -33,15 +33,7 @@ export const Home: React.FC = () => {
 
   return (
     <main className={"center login"}>
-      <NavHeader
-        title={"testtest1"}
-        leftNav={() => {
-          console.log("confirm to logout?");
-        }}
-        rightNav={() => {
-          console.log("Testetest");
-        }}
-      />
+      <NavHeader title={"Address Book"} leftNav={() => history.goBack()} />
       <button onClick={() => navigateTo("/edit")} className={"customButton"}>
         + New Contact
       </button>
