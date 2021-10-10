@@ -4,19 +4,19 @@ import * as actionTypes from "./actionTypes";
 const initialState: ContactState = {
   contacts: [
     {
-      id: 1,
+      id: 11111,
       title: "post 1",
       body:
         "Quisque cursus, metus vitae pharetra Nam libero tempore, cum soluta nobis est eligendi",
     },
     {
-      id: 2,
+      id: 22222,
       title: "post 2",
       body:
         "Harum quidem rerum facilis est et expedita distinctio quas molestias excepturi sint",
     },
     {
-      id: 3,
+      id: 123321,
       title: "post 3",
       body:
         "Harum quidem rerum facilis est et expedita distinctio quas molestias excepturi sint",

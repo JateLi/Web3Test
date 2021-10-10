@@ -28,7 +28,10 @@ export const Home: React.FC = () => {
 
   return (
     <main className={"center login"}>
-      <button onClick={() => navigateTo("/edit")} className={"customButton"}>
+      <button
+        onClick={() => navigateTo("/edit/123321")}
+        className={"customButton"}
+      >
         Adding Button
       </button>
       {contacts.map((item: Contact) => (

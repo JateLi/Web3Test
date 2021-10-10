@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useSelector, shallowEqual } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connector";
@@ -7,17 +6,12 @@ import "../../styles/styles.css";
 import { useEagerConnect, useInactiveListener } from "../../hooks/hooks";
 
 export const Login: React.FC = () => {
-  const { account, activate } = useWeb3React();
+  const { account, activate, connector } = useWeb3React();
   const store = require("store");
   const history = useHistory();
 
   const accountState = store.get("Account");
   const [activatingConnector, setActivatingConnector] = useState<any>();
-
-  const contacts: readonly Contact[] = useSelector(
-    (state: ContactState) => state.contacts,
-    shallowEqual
-  );
 
   async function connect() {
     try {
@@ -28,6 +22,12 @@ export const Login: React.FC = () => {
       console.log(ex);
     }
   }
+
+  useEffect(() => {
+    if (activatingConnector && activatingConnector === connector) {
+      setActivatingConnector(undefined);
+    }
+  }, [activatingConnector, connector]);
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect(accountState);
