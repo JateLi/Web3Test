@@ -179,3 +179,19 @@ main > h1 {
   bottom: 0;
   margin-top: 10px;
 }
+
+.circle {
+  display: flex;
+  width: 100px;
+  height: 100px;
+  background-color: rgb(184, 184, 184);
+  border-radius: 50%;
+  align-items: center;
+  color: white;
+}
+
+.text {
+  margin: auto;
+  font-size: 1.7rem;
+  color: #f5f6f7;
+}

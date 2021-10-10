@@ -9,6 +9,7 @@ import {
   editContact,
 } from "../../store/actionCreator";
 import { NavHeader } from "../util/navHeader";
+import { Avata } from "../util/avata";
 
 export const Edit: React.FC<any> = ({ match }) => {
   const history = useHistory();
@@ -90,6 +91,7 @@ export const Edit: React.FC<any> = ({ match }) => {
     <>
       <form className={"EditContact center login"}>
         <NavHeader title={"Edit"} leftNav={() => history.push("/home")} />
+        {!!selectedItem?.title && <Avata name={selectedItem.title} />}
         <input
           type="text"
           id="title"

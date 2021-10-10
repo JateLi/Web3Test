@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Avata } from "../util/avata";
 
 type Props = {
   contact: Contact;
@@ -9,10 +10,10 @@ export const ContactItem: React.FC<Props> = ({ contact, onSendAddress }) => {
   return (
     <div className={"Contact"} onClick={() => onSendAddress(contact.id)}>
       <div>
-        <h1>{contact.title}</h1>
+        <Avata name={contact.title} />
       </div>
       <div>
-        <p>{contact.body}</p>
+        <p>{contact.title}</p>
       </div>
     </div>
   );

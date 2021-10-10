@@ -4,18 +4,17 @@ import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { useSelector, shallowEqual } from "react-redux";
 import { ethers } from "ethers";
-import { addContact, removeContact } from "../../store/actionCreator";
 import { NavHeader } from "../util/navHeader";
+import { Avata } from "../util/avata";
 
 // TODO need to test with testNet and mock ETH.
 // Not sure if i have enough time to test this. The returned error message looks correct.
-export const startPayment = async ({ ether, addr }: any) => {
+const startPayment = async ({ ether, addr }: any) => {
   const { ethereum } = window as any;
   try {
-    if (!ethereum) {
-      console.log(ethereum);
-      return;
-    }
+    if (!ethereum)
+      throw new Error("No crypto wallet found. Please install it.");
+
     await ethereum.send("eth_requestAccounts");
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
@@ -56,8 +55,6 @@ export const Send: React.FC<any> = ({ match }) => {
     });
   };
 
-  const dispatch: Dispatch<any> = useDispatch();
-
   const onEditContact = (id: number) => {
     history.push(`/edit/${id}`);
   };
@@ -79,12 +76,14 @@ export const Send: React.FC<any> = ({ match }) => {
 
   return (
     <>
-      <form className={"EditContact center login"}>
+      <main className={"EditContact center login"}>
         <NavHeader
           title={`Send to ${selectedItem?.title}`}
           leftNav={() => history.push("/home")}
           rightNav={() => onEditContact(contactId)}
         />
+
+{!!selectedItem?.title && <Avata name={selectedItem.title} />}
         <input
           type="text"
           id="title"
@@ -109,14 +108,10 @@ export const Send: React.FC<any> = ({ match }) => {
           onChange={handleContactData}
           value={contact.ETH}
         />
-        <button
-          className={"customButton"}
-          disabled={contact === undefined ? true : false}
-          onClick={() => handleSubmit()}
-        >
+        <button className={"customButton"} onClick={() => handleSubmit()}>
           Send
         </button>
-      </form>
+      </main>
     </>
   );
 };
