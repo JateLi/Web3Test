@@ -65,11 +65,13 @@ export const Send: React.FC<any> = ({ match }) => {
     setContact(selectedItem);
   }, [selectedItem]);
 
+  // TODO remove Mock data on sending address function.
   const handleSubmit = async () => {
+    const eth = contact.ETH;
     await startPayment({
       setError,
       setTxs,
-      ether: "5",
+      ether: eth,
       addr: "0x17ee3EE41442d29998663F9E549F045B07753844",
     });
   };
@@ -83,7 +85,7 @@ export const Send: React.FC<any> = ({ match }) => {
           rightNav={() => onEditContact(contactId)}
         />
 
-{!!selectedItem?.title && <Avata name={selectedItem.title} />}
+        {!!selectedItem?.title && <Avata name={selectedItem.title} />}
         <input
           type="text"
           id="title"
