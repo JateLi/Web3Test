@@ -26,16 +26,26 @@ export const Home: React.FC = () => {
     }
   }
 
+  const onEditContact = (id: number) => {
+    history.push(`/edit/${id}`);
+  };
+
+  const onSendAddress = (id: number) => {
+    history.push(`/send/${id}`);
+  };
+
   return (
     <main className={"center login"}>
-      <button
-        onClick={() => navigateTo("/edit/123321")}
-        className={"customButton"}
-      >
+      <button onClick={() => navigateTo("/edit")} className={"customButton"}>
         Adding Button
       </button>
       {contacts.map((item: Contact) => (
-        <ContactItem contact={item} key={item.id} />
+        <ContactItem
+          contact={item}
+          key={item.id}
+          onEditContact={onEditContact}
+          onSendAddress={onSendAddress}
+        />
       ))}
       ;
       <button onClick={() => disconnect()} className={"customButton"}>

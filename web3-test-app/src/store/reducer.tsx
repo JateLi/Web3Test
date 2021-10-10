@@ -5,21 +5,23 @@ const initialState: ContactState = {
   contacts: [
     {
       id: 11111,
-      title: "post 1",
-      body:
-        "Quisque cursus, metus vitae pharetra Nam libero tempore, cum soluta nobis est eligendi",
+      title: "John Smith",
+      body: "libero tempore, cum soluta nobis est eligendi",
     },
     {
       id: 22222,
-      title: "post 2",
-      body:
-        "Harum quidem rerum facilis est et expedita distinctio quas molestias excepturi sint",
+      title: "Jack Doe",
+      body: "pedita distinctio quas molestias excepturi sint",
     },
     {
       id: 123321,
-      title: "post 3",
-      body:
-        "Harum quidem rerum facilis est et expedita distinctio quas molestias excepturi sint",
+      title: "Walter White",
+      body: "Harum quidem rerum folestias excepturi sint",
+    },
+    {
+      id: 121,
+      title: "Jesse Pinkman",
+      body: "Harum quidem rerum f sint",
     },
   ],
 };

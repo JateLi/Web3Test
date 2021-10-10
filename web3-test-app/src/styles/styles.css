@@ -50,8 +50,17 @@ main > h1 {
 
 .customLabel {
   color: #646464;
-  text-transform: capitalize;
   font-size: 1.7rem;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.smallCustomLabel {
+  color: #646464;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .EditContact {

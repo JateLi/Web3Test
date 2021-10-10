@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 import { useSelector, shallowEqual } from "react-redux";
 import { addContact, removeContact } from "../../store/actionCreator";
 
-export const Edit: React.FC<any> = ({ match }) => {
+export const Send: React.FC<any> = ({ match }) => {
   const history = useHistory();
   const contactId = match.params.id;
 
@@ -66,6 +66,7 @@ export const Edit: React.FC<any> = ({ match }) => {
           placeholder="Title"
           onChange={handleContactData}
           value={contact.title}
+          disabled={true}
         />
         <input
           type="text"
@@ -73,6 +74,7 @@ export const Edit: React.FC<any> = ({ match }) => {
           placeholder="Description"
           onChange={handleContactData}
           value={contact.body}
+          disabled={true}
         />
         <button disabled={contact === undefined ? true : false}>
           Save Contact

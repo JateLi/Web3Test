@@ -4,6 +4,7 @@ import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connector";
 import "../../styles/styles.css";
 import { useEagerConnect, useInactiveListener } from "../../hooks/hooks";
+import logo from "../../metamask-fox.svg";
 
 export const Login: React.FC = () => {
   const { account, activate, connector } = useWeb3React();
@@ -37,6 +38,12 @@ export const Login: React.FC = () => {
 
   return (
     <main className={"center login"}>
+      <img src={logo} alt="Logo" className={"logoFigure"} />
+      <span className={"customLabel"}>Crypto address book</span>
+      <span className={"smallCustomLabel"}>
+        The easiest and quickest way to mange and pay your contacts. Connect
+        your wallet to begin.
+      </span>
       <span className={"customLabel"}>{account}</span>
       <button type="button" onClick={connect} className={"customButton"}>
         Connect to MetaMask
