@@ -14,6 +14,11 @@ main {
   padding: 2rem 1rem;
 }
 
+.main-wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
 main > h1 {
   text-align: center;
 }
@@ -46,6 +51,17 @@ main > h1 {
   border-radius: 20px;
   cursor: pointer;
   outline: none;
+}
+
+.disconnectButton {
+  width: 21rem;
+  padding: 0.7rem;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #838281;
+  background: #6b6b6b;
 }
 
 .customLabel {
@@ -113,6 +129,9 @@ main > h1 {
   padding: 1rem;
   background: #fff;
   border-radius: 10px;
+  margin-top: 5px;
+  min-height: 60px;
+  min-width: 300px;
 }
 
 .Contact h1 {
@@ -138,4 +157,21 @@ main > h1 {
 
 .Contact button:hover {
   background: #e06a6a;
+}
+
+.list {
+  height: 80vh;
+  width: 50vh;
+  min-width: 400px;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  margin-top: 10px;
 }

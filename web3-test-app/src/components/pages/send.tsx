@@ -3,26 +3,49 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { useSelector, shallowEqual } from "react-redux";
+import { ethers } from "ethers";
 import { addContact, removeContact } from "../../store/actionCreator";
+
+// TODO need to test with testNet and mock ETH.
+export const startPayment = async ({ ether, addr }: any) => {
+  const { ethereum } = window as any;
+  try {
+    if (!ethereum) {
+      console.log(ethereum);
+      return;
+    }
+    await ethereum.send("eth_requestAccounts");
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
+    ethers.utils.getAddress(addr);
+    await signer.sendTransaction({
+      to: addr,
+      value: ethers.utils.parseEther(ether),
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export const Send: React.FC<any> = ({ match }) => {
   const history = useHistory();
   const contactId = match.params.id;
 
-  // Find the right contact item.
   const contacts: readonly Contact[] = useSelector(
     (state: ContactState) => state.contacts,
     shallowEqual
   );
 
   const selectedItem = contacts.find(({ id }) => id === Number(contactId));
-  console.log(selectedItem);
 
-  const [contact, setContact] = useState<Contact>({
+  const [contact, setContact] = useState<any>({
     id: -1,
     title: "",
     body: "",
+    ETH: 0,
   });
+  const [error, setError] = useState();
+  const [txs, setTxs] = useState([]);
 
   const handleContactData = (e: React.FormEvent<HTMLInputElement>) => {
     setContact({
@@ -43,23 +66,28 @@ export const Send: React.FC<any> = ({ match }) => {
     [dispatch]
   );
 
+  const onEditContact = (id: number) => {
+    history.push(`/edit/${id}`);
+  };
+
   useEffect(() => {
     // Overwrite to textInput field.
     if (!selectedItem) return;
     setContact(selectedItem);
   }, [selectedItem]);
 
-  const addNewContact = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("onSubmit");
-    if (!contact) return;
-    addingContact(contact);
-    history.push("/home");
+  const handleSubmit = async () => {
+    await startPayment({
+      setError,
+      setTxs,
+      ether: "5",
+      addr: "0x17ee3EE41442d29998663F9E549F045B07753844",
+    });
   };
 
   return (
     <>
-      <form onSubmit={addNewContact} className={"EditContact center login"}>
+      <form className={"EditContact center login"}>
         <input
           type="text"
           id="title"
@@ -76,11 +104,19 @@ export const Send: React.FC<any> = ({ match }) => {
           value={contact.body}
           disabled={true}
         />
-        <button disabled={contact === undefined ? true : false}>
-          Save Contact
-        </button>
-        <button disabled={contact === undefined ? true : false}>
-          Delete Contact
+
+        <input
+          type="text"
+          id="ETH"
+          placeholder="ETH"
+          onChange={handleContactData}
+          value={contact.ETH}
+        />
+        <button
+          disabled={contact === undefined ? true : false}
+          onClick={() => handleSubmit()}
+        >
+          Send
         </button>
       </form>
     </>

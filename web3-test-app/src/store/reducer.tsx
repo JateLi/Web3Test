@@ -49,6 +49,21 @@ const reducer = (
         ...state,
         contacts: updatedContacts,
       };
+    case actionTypes.EDIT_CONTACT:
+      const index = state.contacts.findIndex(
+        (contact) => contact.id !== action.contact.id
+      );
+      console.log(index);
+      const updatedEditContacts = state.contacts.splice(
+        index,
+        1,
+        action.contact
+      );
+      console.log(updatedEditContacts);
+      return {
+        ...state,
+        contacts: updatedEditContacts,
+      };
   }
   return state;
 };

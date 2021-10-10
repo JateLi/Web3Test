@@ -3,6 +3,7 @@ import { useSelector, shallowEqual } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ContactItem } from "../contact/contactItem";
 import { useWeb3React } from "@web3-react/core";
+import { NavHeader } from "../util/navHeader";
 
 export const Home: React.FC = () => {
   const history = useHistory();
@@ -26,31 +27,38 @@ export const Home: React.FC = () => {
     }
   }
 
-  const onEditContact = (id: number) => {
-    history.push(`/edit/${id}`);
-  };
-
   const onSendAddress = (id: number) => {
     history.push(`/send/${id}`);
   };
 
   return (
     <main className={"center login"}>
+      <NavHeader
+        title={"testtest1"}
+        leftNav={() => {
+          console.log("confirm to logout?");
+        }}
+        rightNav={() => {
+          console.log("Testetest");
+        }}
+      />
       <button onClick={() => navigateTo("/edit")} className={"customButton"}>
-        Adding Button
+        + New Contact
       </button>
-      {contacts.map((item: Contact) => (
-        <ContactItem
-          contact={item}
-          key={item.id}
-          onEditContact={onEditContact}
-          onSendAddress={onSendAddress}
-        />
-      ))}
-      ;
-      <button onClick={() => disconnect()} className={"customButton"}>
-        Disconnect
-      </button>
+      <div className={"list"}>
+        {contacts.map((item: Contact) => (
+          <ContactItem
+            contact={item}
+            key={item.id}
+            onSendAddress={onSendAddress}
+          />
+        ))}
+        <div className={"footer center"}>
+          <button className={"disconnectButton"} onClick={() => disconnect()}>
+            Disconnect
+          </button>
+        </div>
+      </div>
     </main>
   );
 };

@@ -2,24 +2,18 @@ import * as React from "react";
 
 type Props = {
   contact: Contact;
-  onEditContact: (id: number) => void;
   onSendAddress: (id: number) => void;
 };
 
-export const ContactItem: React.FC<Props> = ({
-  contact,
-  onEditContact,
-  onSendAddress,
-}) => {
+export const ContactItem: React.FC<Props> = ({ contact, onSendAddress }) => {
   return (
-    <div className={"Contact"}>
-      <div onClick={() => onEditContact(contact.id)}>
+    <div className={"Contact"} onClick={() => onSendAddress(contact.id)}>
+      <div>
         <h1>{contact.title}</h1>
       </div>
       <div>
         <p>{contact.body}</p>
       </div>
-      <button onClick={() => onSendAddress(contact.id)}>Send</button>
     </div>
   );
 };

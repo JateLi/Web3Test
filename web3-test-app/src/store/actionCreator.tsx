@@ -17,6 +17,14 @@ export function removeContact(contact: Contact) {
   return simulateHttpRequest(action);
 }
 
+export function editContact(contact: Contact) {
+  const action: ContactAction = {
+    type: actionTypes.EDIT_CONTACT,
+    contact,
+  };
+  return simulateHttpRequest(action);
+}
+
 export function simulateHttpRequest(action: ContactAction) {
   return (dispatch: DispatchType) => {
     setTimeout(() => {
